@@ -3,9 +3,30 @@ const express = require('express'),
     app = express(),
     upload = require('express-fileupload'),
     fs = require('fs'),
-    send = require('send');
+    send = require('send'),
+    fr = require('face-recognition'),
+    detector = fr.FaceDetector(),
+    recognizer = fr.FaceRecognizer();
 
 app.use(upload())
+
+
+/**
+ * Functions
+ */
+async function download(url, dest) {
+    var file = fs.createWriteStream(dest);
+    var request = http.get(url, (response) => {
+        response.pipe(file);
+        file.on('finish', () => {
+            file.close();
+            return dest;
+        });
+    }).on('error', (err) => { // Handle errors
+        fs.unlink(dest);
+        return "";
+    });
+};
 
 /**
  * Set up Server
@@ -27,11 +48,14 @@ app.get('/files', (req, res) => {
         return "<a href='/open-file/" + el + "'>" + el + "</a>"
     });
     res.send(arr.join('<br/>'));
-    res.end();
 });
 
 app.get("/open-file*", (req, res) => {
     send(req, __dirname + "\\upload\\" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
+});
+
+app.get("/person", (req, res) => {
+    res.sendFile("person/index.html", { root: __dirname });
 });
 
 /**

@@ -1,0 +1,25 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Home Server</title>
+    <meta name="description" content="Home Server Webpage">
+    <meta name="author" content="Rishav Bhagat">
+
+</head>
+
+<body>
+
+    <h1>Upload Photos to Detect Who it is</h1>
+
+    <form method="POST" enctype="multipart/form-data" action="/" onsubmit="return document.getElementById('fileInput').value.length > 0;">
+        <input type="file" name="filename" id="fileInput" accept="image/*">
+        <input type="submit" value="upload">
+    </form>
+
+</body>
+
+</html>
