@@ -7,9 +7,16 @@ const express = require('express'),
 
 app.use(upload())
 
+/**
+ * Set up Server
+ */
 app.listen(port, () => {
     console.log("Server is running on " + port + " port");
 });
+
+/**
+ * Handle Get Requests
+ */
 
 app.get('/', (req, res) => {
     res.sendFile("public/index.html", { root: __dirname });
@@ -24,28 +31,12 @@ app.get('/files', (req, res) => {
 });
 
 app.get("/open-file*", (req, res) => {
-    console.log("loaded");
-    let filename = req.url.split('/')[req.url.split('/').length - 1];
-    let filePath = __dirname + "\\upload\\" + filename;
-    let stat = fs.statSync(filePath);
-    // 'Content-Type': 'audio/mpeg',
-    res.writeHead(200, {
-        'Content-Length': stat.size,
-        'Content-Disposition': 'attachment; filename=' + filename
-    });
-    let file = fs.readFile(filePath, 'binary');
-
-    var readStream = fs.createReadStream(filePath);
-    readStream.on('open', () => {
-        readStream.pipe(res);
-    });
-    readStream.on('error', err => {
-        console.log(err);
-    });
-    // res.send(filePath);
-    res.end();
+    send(req, __dirname + "\\upload\\" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
 });
 
+/**
+ * Handle Post Requests
+ */
 app.post("/", (req, res) => {
     if (req.files) {
         let file = req.files.filename,
@@ -53,7 +44,7 @@ app.post("/", (req, res) => {
 
         file.mv("./upload/" + filename, err => {
             if (err) {
-                res.send("Error Occured: \n" + err);
+                res.send("Error Occured: <br/>" + err);
             } else {
                 res.send("Done");
             }
