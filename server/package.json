@@ -1,29 +1,32 @@
 {
-  "name": "home-server",
-  "version": "1.0.0",
-  "description": "A server running for my home network",
-  "main": "app.js",
-  "scripts": {
-    "test": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/rishavb123/Home-Server.git"
-  },
-  "keywords": [
-    "home",
-    "server",
-    "rishav",
-    "bhagat"
-  ],
-  "author": "Rishav Bhagat",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/rishavb123/Home-Server/issues"
-  },
-  "homepage": "https://github.com/rishavb123/Home-Server#readme",
-  "dependencies": {
-    "express": "^4.16.4",
-    "express-fileupload": "^1.0.0"
-  }
+    "name": "home-server",
+    "version": "1.0.0",
+    "description": "A server running for my home network",
+    "main": "app.js",
+    "scripts": {
+        "test": "curl",
+        "dev": "nodemon app.js",
+        "start": "node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/rishavb123/Home-Server.git"
+    },
+    "keywords": [
+        "home",
+        "server",
+        "rishav",
+        "bhagat"
+    ],
+    "author": "Rishav Bhagat",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/rishavb123/Home-Server/issues"
+    },
+    "homepage": "https://github.com/rishavb123/Home-Server#readme",
+    "dependencies": {
+        "express": "^4.16.4",
+        "express-fileupload": "^1.0.0",
+        "send": "^0.16.2"
+    }
 }
