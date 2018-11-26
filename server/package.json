@@ -6,7 +6,8 @@
     "scripts": {
         "test": "curl",
         "dev": "nodemon app.js",
-        "start": "node app.js"
+        "start": "node app.js",
+        "clear": "del upload"
     },
     "repository": {
         "type": "git",
