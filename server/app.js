@@ -1,8 +1,9 @@
-const express = require('express');
-const port = 80;
-const app = express();
-const upload = require('express-fileupload');
-const fs = require('fs')
+const express = require('express'),
+    port = 80,
+    app = express(),
+    upload = require('express-fileupload'),
+    fs = require('fs'),
+    send = require('send');
 
 app.use(upload())
 
@@ -28,17 +29,20 @@ app.get("/open-file*", (req, res) => {
     let filePath = __dirname + "\\upload\\" + filename;
     let stat = fs.statSync(filePath);
     // 'Content-Type': 'audio/mpeg',
-    // res.writeHead(200, {
-    //     'Content-Length': stat.size,
-    //     'Content-Disposition': 'attachment; filename=' + filename
-    // });
-    // let file = fs.readFile(filePath, 'binary');
+    res.writeHead(200, {
+        'Content-Length': stat.size,
+        'Content-Disposition': 'attachment; filename=' + filename
+    });
+    let file = fs.readFile(filePath, 'binary');
 
-    // var readStream = fs.createReadStream(filePath);
-    // readStream.on('open', err => {
-    //     readStream.pipe(res);
-    // });
-    res.send(filePath);
+    var readStream = fs.createReadStream(filePath);
+    readStream.on('open', () => {
+        readStream.pipe(res);
+    });
+    readStream.on('error', err => {
+        console.log(err);
+    });
+    // res.send(filePath);
     res.end();
 });
 
