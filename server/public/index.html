@@ -9,20 +9,17 @@
     <meta name="description" content="Home Server Webpage">
     <meta name="author" content="Rishav Bhagat">
 
-    <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
 
     <h1>Upload Files to the Home Server Here</h1>
 
-    <form method="POST" enctype="multipart/form-data" action="/">
-        <input type="file" name="filename">
+    <form method="POST" enctype="multipart/form-data" action="/" onsubmit="return document.getElementById('fileInput').value.length > 0;">
+        <input type="file" name="filename" id="fileInput">
         <input type="submit" value="upload">
     </form>
 
-    <script src="script.js"></script>
 </body>
 
 </html>
