@@ -15,10 +15,23 @@
 
     <h1>Upload Photos to Detect Who it is</h1>
 
-    <form method="POST" enctype="multipart/form-data" action="/" onsubmit="return document.getElementById('fileInput').value.length > 0;">
-        <input type="file" name="filename" id="fileInput" accept="image/*">
-        <input type="submit" value="upload">
+    <form method="POST" enctype="multipart/form-data" action="/people" onsubmit="return document.getElementById('fileInput').value.length > 0;">
+        <input type="text" name="name" />
+        <input type="file" name="filename" id="fileInput" accept="image/*" />
+        <input type="submit" value="upload" />
     </form>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
+    <script>
+        var socket = io.connect('http://192.168.1.31:80');
+        socket.on('connect', function(data) {
+            socket.emit('join', 'Hello World from client');
+        });
+        socket.on('message', function(data) {
+            alert(data);
+        });
+    </script>
 
 </body>
 

@@ -1,15 +1,16 @@
 const express = require('express'),
     port = 80,
     app = express(),
+    server = require('http').createServer(app),
     upload = require('express-fileupload'),
     fs = require('fs'),
     send = require('send'),
     fr = require('face-recognition'),
+    io = require('socket.io')(server),
     detector = fr.FaceDetector(),
     recognizer = fr.FaceRecognizer();
 
-app.use(upload())
-
+app.use(upload());
 
 /**
  * Functions
@@ -31,8 +32,21 @@ async function download(url, dest) {
 /**
  * Set up Server
  */
-app.listen(port, () => {
+server.listen(port, () => {
     console.log("Server is running on " + port + " port");
+});
+
+/**
+ * Socket io 
+ */
+io.on('connection', function(socket) {
+    console.log('Client connected...');
+
+    socket.on('join', function(data) {
+        console.log(data);
+        socket.emit('messages', 'Hello from server');
+    });
+
 });
 
 /**
@@ -75,4 +89,17 @@ app.post("/", (req, res) => {
             res.end();
         });
     }
+});
+
+app.post("/people", (req, res) => {
+    console.log("got data");
+    console.log(req.download);
+    if (req.files) {
+        let file = req.files.filename,
+            filename = req.files.filename.name;
+
+        console.log(req.read());
+    }
+    res.send("Done");
+    res.end();
 });
