@@ -7,6 +7,10 @@ const express = require('express'),
     send = require('send'),
     fr = require('face-recognition'),
     io = require('socket.io')(server),
+    childProcess = require('child_process'),
+    spawn = childProcess.spawn,
+    randomstring = require('randomstring'),
+    nodemailer = require('nodemailer'),
     detector = fr.FaceDetector(),
     recognizer = fr.FaceRecognizer();
 
@@ -92,14 +96,17 @@ app.post("/", (req, res) => {
 });
 
 app.post("/people", (req, res) => {
-    console.log("got data");
-    console.log(req.download);
+    console.log(req.body.name);
     if (req.files) {
         let file = req.files.filename,
             filename = req.files.filename.name;
-
-        console.log(req.read());
+        file.mv("./faces/" + req.body.name + "/" + randomstring.generate(15) + filename.split('.')[filename.split('.').length - 1], err => {
+            if (err) {
+                res.send("Error Occured: <br/>" + err);
+            } else {
+                res.send("Done");
+            }
+            res.end();
+        });
     }
-    res.send("Done");
-    res.end();
 });
