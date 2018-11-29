@@ -1,3 +1,4 @@
+"use strict";
 const express = require('express'),
     port = 80,
     app = express(),
@@ -15,10 +16,6 @@ const express = require('express'),
     recognizer = fr.FaceRecognizer();
 
 app.use(upload());
-
-/**
- * Functions
- */
 
 /**
  * Set up Server
