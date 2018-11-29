@@ -29,8 +29,17 @@
         "express": "^4.16.4",
         "express-fileupload": "^1.0.0",
         "face-recognition": "^0.9.4",
+        "nodemailer": "^4.7.0",
+        "randomstring": "^1.1.5",
         "send": "^0.16.2",
         "socket.io": "^2.1.1"
     },
-    "devDependencies": {}
+    "devDependencies": {},
+    "bin": {
+        "myapp": "./app.js"
+    },
+    "pkg": {
+        "scripts": "app.js",
+        "assets": "public/*"
+    }
 }
