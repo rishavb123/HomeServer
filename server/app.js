@@ -19,19 +19,6 @@ app.use(upload());
 /**
  * Functions
  */
-async function download(url, dest) {
-    var file = fs.createWriteStream(dest);
-    var request = http.get(url, (response) => {
-        response.pipe(file);
-        file.on('finish', () => {
-            file.close();
-            return dest;
-        });
-    }).on('error', (err) => { // Handle errors
-        fs.unlink(dest);
-        return "";
-    });
-};
 
 /**
  * Set up Server
