@@ -1,5 +1,5 @@
 const express = require('express'),
-    port = 80,
+    port = 8000,
     app = express(),
     server = require('http').createServer(app),
     upload = require('express-fileupload'),
@@ -69,7 +69,7 @@ app.get('/files', (req, res) => {
 });
 
 app.get("/open-file*", (req, res) => {
-    send(req, __dirname + "\\upload\\" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
+    send(req, __dirname + "/upload/" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
 });
 
 app.get("/person", (req, res) => {
