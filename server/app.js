@@ -1,5 +1,5 @@
 const express = require('express'),
-    port = 80,
+    port = 8000,
     app = express(),
     server = require('http').createServer(app),
     upload = require('express-fileupload'),
