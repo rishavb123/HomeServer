@@ -4,7 +4,7 @@
     "description": "A server running for my home network",
     "main": "app.js",
     "scripts": {
-        "test": "node test.js",
+        "test": "curl http://192.168.1.50:8000/",
         "dev": "nodemon app.js",
         "start": "node app.js",
         "clear": "del upload"
@@ -37,9 +37,5 @@
     "devDependencies": {},
     "bin": {
         "myapp": "./app.js"
-    },
-    "pkg": {
-        "scripts": "app.js",
-        "assets": "public/*"
     }
 }
