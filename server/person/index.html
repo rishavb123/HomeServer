@@ -24,7 +24,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
     <script>
-        var socket = io.connect('http://192.168.1.31:80');
+        var socket = io.connect('http://192.168.1.50:8000');
         socket.on('connect', function(data) {
             socket.emit('join', 'Hello World from client');
         });
