@@ -16,6 +16,7 @@ const express = require('express'),
     recognizer = fr.FaceRecognizer();
 
 app.use(upload());
+app.use(express.static("."));
 
 /**
  * Functions
@@ -61,6 +62,13 @@ io.on('connection', function(socket) {
 app.get('/', (req, res) => {
     res.sendFile("public/index.html", { root: __dirname });
 });
+
+// app.get('/game', (req, res) => {
+//     res.sendFile('game/index.html', { root: __dirname });
+// });
+// app.get('/game/*', (req, res) => {
+//     res.sendFile(req.url.substring("." + req.url.indexOf("/game")), { root: __dirname });
+// });
 
 app.get('/files', (req, res) => {
     let arr = fs.readdirSync('upload').map(el => {
