@@ -36,17 +36,27 @@ app.root.addChild(light);
 // set up initial positions and orientations
 camera.setPosition(0, 0, 4);
 light.setEulerAngles(0, 0, 0);
+app.scene.ambientLight = new pc.Color(0.7, 0.7, 0.6);
 cube.rotate(45, 45, 45);
 
-let x = 40;
-let v = 2;
+let boxMaterial = new pc.PhongMaterial();
+boxMaterial.diffuse.set(0, 0.58, 0.86);
+boxMaterial.update();
+cube.model.model.meshInstances[0].material = boxMaterial;
 
+let t = 0;
 let angle = 0;
+
+cube.setPosition(1.5 * Math.sin(t), 1.5 * Math.sin(t - 1), 0);
 
 // register a global update event
 app.on('update', function(deltaTime) {
     // camera.setPosition(0, 0, x = deltaTime * v + x);
     light.setEulerAngles(90, 90, ++angle);
+    cube.rotate(deltaTime * 10 * (Math.random() + 1), deltaTime * 20 * (Math.random() + 1), deltaTime * 30 * (Math.random() + 1));
+    // cube.setPosition(x = deltaTime * v + x, 0, 0);
+    t += deltaTime;
+    cube.setPosition(1.5 * Math.cos(t), 0.6 * Math.sin(2.2 * t - 1), Math.tan(1.5 * t));
 });
 
 window.addEventListener("keydown", e => {
