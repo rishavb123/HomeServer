@@ -16,6 +16,9 @@ const express = require('express'),
     detector = fr.FaceDetector(),
     recognizer = fr.FaceRecognizer();
 
+const createBuffer = require('audio-buffer-from');
+
+
 app.use(upload());
 app.use(express.static("."));
 
@@ -59,8 +62,8 @@ io.on('connection', function(socket) {
 io.of('/sound').on('connection', socket => {
     console.log("Client connected to sound sub page");
     socket.on('audio', data => {
-        console.log(data);
-        // let playback = play(data, null, null);
+        console.log(data.data, "DONE");
+        // let playback = play(createBuffer(data.data, 'interleaved 96000'), null, null);
     });
 });
 

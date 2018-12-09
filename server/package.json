@@ -26,7 +26,9 @@
     },
     "homepage": "https://github.com/rishavb123/Home-Server#readme",
     "dependencies": {
+        "audio-buffer-from": "^1.1.1",
         "audio-play": "^2.2.1",
+        "audio-stream": "^0.2.0",
         "express": "^4.16.4",
         "express-fileupload": "^1.0.0",
         "face-recognition": "^0.9.4",
