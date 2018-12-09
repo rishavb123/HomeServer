@@ -1,9 +1,12 @@
 const express = require('express'),
     port = 8000,
     app = express(),
-    server = require('https').createServer(app),
-    upload = require('express-fileupload'),
     fs = require('fs'),
+    server = require('https').createServer({
+        key: fs.readFileSync('credentials/server.key'),
+        cert: fs.readFileSync('credentials/server.cert')
+    }, app),
+    upload = require('express-fileupload'),
     send = require('send'),
     fr = require('face-recognition'),
     io = require('socket.io')(server),
