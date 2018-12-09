@@ -1,6 +1,6 @@
 const audio = require('audio-stream');
 
-var socket = io.connect('http://localhost:8000/sound');
+var socket = io.connect('http://192.168.1.50:8000:8000/sound');
 
 socket.on('connect', function(data) {
     socket.emit('join', 'Hello World from client');
