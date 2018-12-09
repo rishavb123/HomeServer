@@ -9,7 +9,7 @@ socket.on('message', function(data) {
     alert(data);
 });
 
-navigator.getUserMedia({
+navigator.mediaDevices.getUserMedia({
     audio: true,
     video: false
 }, mediaStream => {

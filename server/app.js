@@ -1,7 +1,7 @@
 const express = require('express'),
     port = 8000,
     app = express(),
-    server = require('http').createServer(app),
+    server = require('https').createServer(app),
     upload = require('express-fileupload'),
     fs = require('fs'),
     send = require('send'),
