@@ -8,6 +8,7 @@ const express = require('express'),
     fr = require('face-recognition'),
     io = require('socket.io')(server),
     ss = require('socket.io-stream'),
+    play = require('audio-play'),
     childProcess = require('child_process'),
     spawn = childProcess.spawn,
     randomstring = require('randomstring'),
@@ -53,6 +54,14 @@ io.on('connection', function(socket) {
         socket.emit('messages', 'Hello from server');
     });
 
+});
+
+io.of('/sound').on('connection', socket => {
+    console.log("Client connected to sound sub page");
+    socket.on('audio', data => {
+        console.log(data);
+        // let playback = play(data, null, null);
+    });
 });
 
 /**

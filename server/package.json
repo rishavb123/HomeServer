@@ -26,6 +26,7 @@
     },
     "homepage": "https://github.com/rishavb123/Home-Server#readme",
     "dependencies": {
+        "audio-play": "^2.2.1",
         "express": "^4.16.4",
         "express-fileupload": "^1.0.0",
         "face-recognition": "^0.9.4",
@@ -33,7 +34,8 @@
         "randomstring": "^1.1.5",
         "send": "^0.16.2",
         "socket.io": "^2.1.1",
-        "socket.io-stream": "^0.9.1"
+        "socket.io-stream": "^0.9.1",
+        "wav": "^1.0.2"
     },
     "devDependencies": {},
     "bin": {
