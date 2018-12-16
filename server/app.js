@@ -20,6 +20,7 @@ const createBuffer = require('audio-buffer-from');
 
 app.use(upload());
 app.use(express.static("public"));
+app.use('/modules', express.static(__dirname + '/node_modules'));
 
 /**
  * Functions
