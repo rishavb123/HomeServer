@@ -14,7 +14,8 @@ const express = require('express'),
     randomstring = require('randomstring'),
     nodemailer = require('nodemailer'),
     detector = fr.FaceDetector(),
-    recognizer = fr.FaceRecognizer();
+    recognizer = fr.FaceRecognizer(),
+    SSHClient = require('ssh2').Client;
 
 const createBuffer = require('audio-buffer-from');
 
@@ -26,8 +27,8 @@ app.use('/modules', express.static(__dirname + '/node_modules'));
  * Functions
  */
 async function download(url, dest) {
-    var file = fs.createWriteStream(dest);
-    var request = http.get(url, (response) => {
+    let file = fs.createWriteStream(dest);
+    let request = http.get(url, (response) => {
         response.pipe(file);
         file.on('finish', () => {
             file.close();
@@ -64,6 +65,33 @@ io.of('/sound').on('connection', socket => {
     socket.on('audio', data => {
         console.log(data.data, "DONE");
         // let playback = play(createBuffer(data.data, 'interleaved 96000'), null, null);
+    });
+});
+
+io.of('/ssh').on('connection', function(socket) {
+    let conn = new SSHClient();
+    conn.on('ready', function() {
+        socket.emit('data', '\r\n*** SSH CONNECTION ESTABLISHED ***\r\n');
+        conn.shell(function(err, stream) {
+            if (err)
+                return socket.emit('data', '\r\n*** SSH SHELL ERROR: ' + err.message + ' ***\r\n');
+            socket.on('data', function(data) {
+                stream.write(data);
+            });
+            stream.on('data', function(d) {
+                socket.emit('data', d.toString('binary'));
+            }).on('close', function() {
+                conn.end();
+            });
+        });
+    }).on('close', function() {
+        socket.emit('data', '\r\n*** SSH CONNECTION CLOSED ***\r\n');
+    }).on('error', function(err) {
+        socket.emit('data', '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
+    }).connect({
+        host: 'localhost',
+        username: 'foo',
+        password: 'barbaz'
     });
 });
 
