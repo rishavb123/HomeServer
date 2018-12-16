@@ -89,7 +89,7 @@ io.of('/ssh').on('connection', function(socket) {
     }).on('error', function(err) {
         socket.emit('data', '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
     }).connect({
-        host: 'localhost',
+        host: '',
         username: 'foo',
         password: 'barbaz'
     });
