@@ -18,9 +18,8 @@ const express = require('express'),
 
 const createBuffer = require('audio-buffer-from');
 
-
 app.use(upload());
-app.use(express.static("."));
+app.use(express.static("public"));
 
 /**
  * Functions
@@ -91,10 +90,6 @@ app.get('/files', (req, res) => {
 
 app.get("/open-file*", (req, res) => {
     send(req, __dirname + "/upload/" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
-});
-
-app.get("/person", (req, res) => {
-    res.sendFile("person/index.html", { root: __dirname });
 });
 
 /**
