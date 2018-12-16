@@ -96,7 +96,7 @@ app.get("/email*", (req, res) => {
     });
 
     let mailOptions = {
-        from: 'process.env.email',
+        from: process.env.email,
         to: 'rishavb123@bhagat.io',
         subject: 'SAT Scores are out GO CHECK',
         html: 'It was ' + req.url.split('/')[req.url.split('/').length - 1].replace(/%20/g, ' ') + '<a href="https://studentscores.collegeboard.org/viewscore"> CLICK AND CHECK </a>'
