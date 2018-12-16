@@ -92,6 +92,33 @@ app.get("/open-file*", (req, res) => {
     send(req, __dirname + "/upload/" + req.url.split('/')[req.url.split('/').length - 1]).pipe(res);
 });
 
+app.get("/email*", (req, res) => {
+
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.email,
+            pass: process.env.email_pass
+        }
+    });
+
+    let mailOptions = {
+        from: 'process.env.email',
+        to: 'rishavb123@bhagat.io',
+        subject: 'SAT Scores are out GO CHECK',
+        html: 'It was ' + req.url.split('/')[req.url.split('/').length - 1].replace(/%20/g, ' ') + '<a href="https://studentscores.collegeboard.org/viewscore"> CLICK AND CHECK </a>'
+    };
+
+    transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send('Email sent: ' + info.response);
+        }
+    });
+
+});
+
 /**
  * Handle Post Requests
  */
