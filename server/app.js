@@ -17,6 +17,7 @@ const express = require('express'),
     recognizer = fr.FaceRecognizer(),
     SSHClient = require('ssh2').Client;
 
+require('dotenv').config()
 const createBuffer = require('audio-buffer-from');
 
 app.use(upload());
@@ -86,12 +87,13 @@ io.of('/ssh').on('connection', function(socket) {
         });
     }).on('close', function() {
         socket.emit('data', '\r\n*** SSH CONNECTION CLOSED ***\r\n');
+        socket.emit('end', 'end');
     }).on('error', function(err) {
         socket.emit('data', '\r\n*** SSH CONNECTION ERROR: ' + err.message + ' ***\r\n');
     }).connect({
-        host: '',
-        username: 'foo',
-        password: 'barbaz'
+        host: process.env.ip,
+        username: "rishav",
+        password: process.env.password
     });
 });
 

@@ -1,11 +1,10 @@
- This is easily doable with modules like ssh2, xterm, and socket.io. Here's an example: npm install ssh2 xterm socket.io Create index.html:
 <html>
 
 <head>
     <title>SSH Terminal</title>
-    <link rel="stylesheet" href="/modules/xterm/dist//xterm.css" />
+    <link rel="stylesheet" href="/modules/xterm/src/xterm.css" />
     <script src="/modules/xterm/dist/xterm.js"></script>
-    <!-- <script src="/addons/fit/fit.js"></script> -->
+    <script src="/modules/xterm/dist/addons/fit/fit.js"></script>
     <script src="/modules/socket.io-client/dist/socket.io.js"></script>
     <script>
         window.addEventListener('load', function() {
@@ -14,21 +13,27 @@
                 cursorBlink: true
             });
             term.open(terminalContainer);
-            term.fit();
+            // fit(term);
 
             let socket = io.connect('http://localhost:8000/ssh');
             socket.on('connect', function() {
                 term.write('\r\n*** Connected to backend***\r\n');
+                let connected = true;
 
                 // Browser -> Backend
                 term.on('data', function(data) {
-                    socket.emit('data', data);
+                    if (connected)
+                        socket.emit('data', data);
                 });
 
                 // Backend -> Browser
                 socket.on('data', function(data) {
                     term.write(data);
                 });
+
+                socket.on('end', data => {
+                    connected = false;
+                })
 
                 socket.on('disconnect', function() {
                     term.write('\r\n*** Disconnected from backend***\r\n');
