@@ -97,6 +97,33 @@ app.get("/person", (req, res) => {
     res.sendFile("person/index.html", { root: __dirname });
 });
 
+app.get("/email*", (req, res) => {
+
+	let transporter = nodemailer.createTransport({
+	  service: 'gmail',
+	  auth: {
+	    user: process.env.email_user,
+	    pass: process.env.email_pass
+	  }
+	});
+
+	let mailOptions = {
+	  from: 'pythonemailsender1@gmail.com',
+	  to: 'rishavb123@gmail.com',
+	  subject: 'SAT Scores are out GO CHECK',
+	  html: 'It was '+req.url.split('/')[req.url.split('/').length - 1].replace(/%20/g, ' ')+'<a href="https://studentscores.collegeboard.org/viewscore"> CLICK AND CHECK </a>'
+	};
+
+	transporter.sendMail(mailOptions, function(error, info){
+	  if (error) {
+	    res.send(error);
+	  } else {
+	    res.send('Email sent: ' + info.response);
+	  }
+	});
+
+});
+
 /**
  * Handle Post Requests
  */
