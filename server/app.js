@@ -31,8 +31,8 @@ app.use('/modules', express.static(__dirname + '/node_modules'));
 
 async function getTplinkDevice() {
     try {
-        // console.log(process.env.tplink_email);
         let tplink = await login(process.env.tplink_email, process.env.tplink_password, "12345");
+	await tplink.getDeviceList();
         tplink_device = tplink.getHS200("RBSmartDimmer");
     } catch (e) {
         console.log("HERE: " + e.message);
