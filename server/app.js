@@ -15,15 +15,29 @@ const express = require('express'),
     nodemailer = require('nodemailer'),
     detector = fr.FaceDetector(),
     recognizer = fr.FaceRecognizer(),
-    SSHClient = require('ssh2').Client;
+    SSHClient = require('ssh2').Client,
+    { login } = require("tplink-cloud-api");
+
 
 require('dotenv').config()
 const createBuffer = require('audio-buffer-from');
+
+let tplink_device;
+getTplinkDevice();
 
 app.use(upload());
 app.use(express.static("public"));
 app.use('/modules', express.static(__dirname + '/node_modules'));
 
+async function getTplinkDevice() {
+    try {
+        // console.log(process.env.tplink_email);
+        let tplink = await login(process.env.tplink_email, process.env.tplink_password, "12345");
+        tplink_device = tplink.getHS200("RBSmartDimmer");
+    } catch (e) {
+        console.log("HERE: " + e.message);
+    }
+}
 /**
  * Functions
  */
@@ -141,6 +155,32 @@ app.get("/email*", (req, res) => {
         }
     });
 
+});
+
+app.get("/lights", (req, res) => {
+    if (req.query.admin_key == process.env.admin_key) {
+        if (req.query.state == undefined || req.query.state == null)
+            req.query.state = "toggle";
+        switch (req.query.state.toLowerCase()) {
+            case "on":
+                tplink_device.powerOn();
+                res.send("Device On");
+                break;
+            case "off":
+                tplink_device.powerOff();
+                res.send("Device Off");
+                break;
+            case "toggle":
+                tplink_device.toggle();
+                res.send("Device Toggled");
+                break;
+            default:
+                res.send("Invalid State");
+                break;
+        }
+    } else {
+        res.send("Incorrect Admin Key");
+    }
 });
 
 /**
