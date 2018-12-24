@@ -39,6 +39,7 @@
         "socket.io": "^2.1.1",
         "socket.io-stream": "^0.9.1",
         "ssh2": "^0.6.1",
+        "tplink-cloud-api": "^0.3.8",
         "wav": "^1.0.2",
         "xterm": "^3.9.1"
     },
