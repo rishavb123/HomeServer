@@ -16,7 +16,8 @@ const express = require('express'),
     detector = fr.FaceDetector(),
     recognizer = fr.FaceRecognizer(),
     SSHClient = require('ssh2').Client,
-    { login } = require("tplink-cloud-api");
+    { login } = require("tplink-cloud-api"),
+    nest = require("unofficial-nest-api");
 
 
 require('dotenv').config()
@@ -25,6 +26,8 @@ const createBuffer = require('audio-buffer-from');
 let tplink_device;
 getTplinkDevice();
 
+nestLogin();
+
 app.use(upload());
 app.use(express.static("public"));
 app.use('/modules', express.static(__dirname + '/node_modules'));
@@ -32,11 +35,20 @@ app.use('/modules', express.static(__dirname + '/node_modules'));
 async function getTplinkDevice() {
     try {
         let tplink = await login(process.env.tplink_email, process.env.tplink_password, "12345");
-	await tplink.getDeviceList();
+        await tplink.getDeviceList();
         tplink_device = tplink.getHS200("RBSmartDimmer");
     } catch (e) {
         console.log("HERE: " + e.message);
     }
+}
+
+function nestLogin() {
+    nest.login(process.env.nest_email, process.env.nest_password, (err, data) => {
+        if (err)
+            console.log(err.message);
+        else
+            nest.fetchStatus((data) => {});
+    });
 }
 /**
  * Functions
@@ -180,6 +192,20 @@ app.get("/lights", (req, res) => {
         }
     } else {
         res.send("Incorrect Admin Key");
+    }
+});
+
+app.get("/thermostat", (req, res) => {
+    try {
+        if (req.query.admin_key == process.env.admin_key) {
+            nest.setTemperature(nest.getDeviceIds()[0], parseInt(req.query.temp));
+            res.send("Set Temperature to " + req.query.temp);
+        } else {
+            res.send("Incorrect Admin Key");
+        }
+    } catch (e) {
+        res.send("Error setting thermostat temperature: " + e.message);
+        console.log("Error setting thermostat temperature: " + e.message);
     }
 });
 
