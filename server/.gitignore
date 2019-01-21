@@ -3,3 +3,4 @@ upload
 credentials
 faces
 *.env
+test.js
