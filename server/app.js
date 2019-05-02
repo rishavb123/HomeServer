@@ -30,7 +30,7 @@ getTplinkDevice();
 
 nestLogin();
 
-app.use();
+app.use(cors());
 app.use(upload());
 app.use(express.static("public"));
 app.use('/modules', express.static(__dirname + '/node_modules'));
