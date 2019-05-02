@@ -27,6 +27,7 @@
     "homepage": "https://github.com/rishavb123/Home-Server#readme",
     "dependencies": {
         "audio-buffer-from": "^1.1.1",
+        "audio-loader": "^1.0.3",
         "audio-play": "^2.2.1",
         "audio-stream": "^0.2.0",
         "dotenv": "^6.2.0",

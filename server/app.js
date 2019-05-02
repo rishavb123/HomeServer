@@ -9,6 +9,7 @@ const express = require('express'),
     io = require('socket.io')(server),
     ss = require('socket.io-stream'),
     play = require('audio-play'),
+    load = require('audio-loader'),
     childProcess = require('child_process'),
     spawn = childProcess.spawn,
     randomstring = require('randomstring'),
@@ -17,7 +18,9 @@ const express = require('express'),
     recognizer = fr.FaceRecognizer(),
     SSHClient = require('ssh2').Client,
     { login } = require("tplink-cloud-api"),
-    nest = require("unofficial-nest-api");
+    nest = require("unofficial-nest-api"),
+    cors = require('cors'),
+    tts = require('google-tts-api');
 
 
 require('dotenv').config()
@@ -28,6 +31,7 @@ getTplinkDevice();
 
 nestLogin();
 
+app.use();
 app.use(upload());
 app.use(express.static("public"));
 app.use('/modules', express.static(__dirname + '/node_modules'));
