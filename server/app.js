@@ -19,8 +19,7 @@ const express = require('express'),
     SSHClient = require('ssh2').Client,
     { login } = require("tplink-cloud-api"),
     nest = require("unofficial-nest-api"),
-    cors = require('cors'),
-    tts = require('google-tts-api');
+    cors = require('cors');
 
 
 require('dotenv').config()
