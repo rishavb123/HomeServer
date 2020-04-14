@@ -41,7 +41,7 @@
         "tplink-cloud-api": "^0.3.8",
         "unofficial-nest-api": "^0.1.4",
         "wav": "^1.0.2",
-        "xterm": "^3.9.1"
+        "xterm": "^3.9.2"
     },
     "devDependencies": {},
     "bin": {
