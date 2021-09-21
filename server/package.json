@@ -37,7 +37,7 @@
         "send": "^0.16.2",
         "socket.io": "^2.1.1",
         "socket.io-stream": "^0.9.1",
-        "ssh2": "^0.6.1",
+        "ssh2": "^1.4.0",
         "tplink-cloud-api": "^0.3.8",
         "unofficial-nest-api": "^0.1.4",
         "wav": "^1.0.2",
